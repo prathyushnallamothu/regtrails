@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/prathyushnallamothu/dbconnection"
+	"github.com/prathyushnallamothu/cleverdbconnection"
 )
 var Email string
 var tpl *template.Template
