@@ -67,8 +67,7 @@ func registerhandler(w http.ResponseWriter,r *http.Request){
 	}
 }
 func registersucesshandler(w http.ResponseWriter,r *http.Request){
-	fmt.Fprintf(w,"registered sucessfully,will update login page shortly kindly please wait")
-	http.Redirect(w,r,"/login",307)
+		http.Redirect(w,r,"/login",307)
 }
 func loginhandler(w http.ResponseWriter,r *http.Request){
 	tpl.ExecuteTemplate(w,"login.html",nil)
@@ -80,7 +79,7 @@ func loginprocesshandler(w http.ResponseWriter,r *http.Request){
 	}
 	db:=dbconnection.Connect()
 	defer db.Close()
-	result,err:=db.Query("select (emailid,password) from registration where emailid=?",x.Emailid)
+	result,err:=db.Query("select emailid,password from registration where emailid=?",x.Emailid)
 	if err!=nil{
 		log.Fatal(err)
 	}
