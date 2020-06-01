@@ -71,7 +71,7 @@ func registersucesshandler(w http.ResponseWriter,r *http.Request){
 	http.Redirect(w,r,"/login",307)
 }
 func loginhandler(w http.ResponseWriter,r *http.Request){
-	tmp.ExecuteTemplate(w,"login.html",nil)
+	tpl.ExecuteTemplate(w,"login.html",nil)
 }
 func loginprocesshandler(w http.ResponseWriter,r *http.Request){
 	x:=data{
