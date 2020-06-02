@@ -187,7 +187,6 @@ if r.FormValue("q")=="company"{
 	}
 	if Email=="anukruthi.pulimi02@gmail.com"{
 		if x.Password==Password{
-			cookies.SetCookie(w,"D_id",Email)
 			http.Redirect(w,r,"/dashboard?q=anu",307)
 		}
 	}
@@ -225,16 +224,16 @@ func dashboardhandler(w http.ResponseWriter,r *http.Request){
 			z.Developer=append(z.Developer,y)
 		}
 		z.Value="developer"
-		if x.Value=="anukruthi.pulimi02@gmail.com"{
+		if x=="anukruthi.pulimi02@gmail.com"{
 			tpl.ExecuteTemplate(w,"anudashboard.html",z)
 		}
-		if x.Value!="anukruthi.pulimi02@gmail.com"{
+		if x!="anukruthi.pulimi02@gmail.com"{
 			tpl.ExecuteTemplate(w,"dashboard.html",z)
 		}
 				
 	}
 	if r.FormValue("q")=="company"{
-		y:=r.FormValue("email")
+		x:=r.FormValue("email")
 		db:=dbconnection.Connect()
 		defer db.Close()
 		result1,err1:=db.Query("select cname from company where emailid=?",y)
