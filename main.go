@@ -92,7 +92,7 @@ func registersucessfulhandler(w http.ResponseWriter,r *http.Request){
 			log.Fatal(err1)
 		}
 		fmt.Println(result1)
-		http.Redirect(w,r,"/registersucess",307)
+		http.Redirect(w,r,"/registersucess?q=developers",307)
 	}
 	}
 	if r.FormValue("q")=="company"{
@@ -123,12 +123,17 @@ func registersucessfulhandler(w http.ResponseWriter,r *http.Request){
 				log.Fatal(err1)
 			}
 			fmt.Println(result1)
-			http.Redirect(w,r,"/registersucess",307)
+			http.Redirect(w,r,"/registersucess?q=company",307)
 		}
 	}
 }
 func registersucesshandler(w http.ResponseWriter,r *http.Request){
-	http.Redirect(w,r,"/login",307)
+	if r.FormValue("q")=="developers"{
+	http.Redirect(w,r,"/login?q=developers",307)
+	}
+	if r.FormValue("q")=="company"{
+	http.Redirect(w,r,"/login?q=company",307)
+	}
 }
 func loginhandler(w http.ResponseWriter,r *http.Request){
 	if r.FormValue("q")=="developers"{
