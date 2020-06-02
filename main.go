@@ -128,7 +128,7 @@ func registersucessfulhandler(w http.ResponseWriter,r *http.Request){
 	}
 }
 func registersucesshandler(w http.ResponseWriter,r *http.Request){
-	fmt.Fprintf(w,"sucessfully registered")
+	http.Redirect(w,r,"/login",307)
 }
 func loginhandler(w http.ResponseWriter,r *http.Request){
 	if r.FormValue("q")=="developers"{
