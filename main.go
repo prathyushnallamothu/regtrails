@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"github.com/prathyushnallamothu/mycookie"
+	//"github.com/prathyushnallamothu/mycookie"
 	"github.com/gorilla/mux"
 	"github.com/prathyushnallamothu/cleverdbconnection"
 )
@@ -158,8 +158,8 @@ func loginprocesshandler(w http.ResponseWriter,r *http.Request){
 	}
 	if x.Emailid==Email{
 		if x.Password==Password{
-			cookies.SetCookie(w,"D_id",Email)
-			http.Redirect(w,r,"/dashboard?q=developers",307)
+			
+			http.Redirect(w,r,"/dashboard?q=developers&email="+Email,307)
 		}else{
 			fmt.Fprintf(w,"email or password incorrect")
 		}
@@ -193,8 +193,8 @@ if r.FormValue("q")=="company"{
 	}
 	if x.Emailid==Email{
 		if x.Password==Password{
-			cookies.SetCookie(w,"C_id",Email)
-			http.Redirect(w,r,"/dashboard?q=company",307)
+		
+			http.Redirect(w,r,"/dashboard?q=company&email="+Email,307)
 		}else{
 			fmt.Fprintf(w,"email or password incorrect")
 		}
@@ -205,17 +205,12 @@ if r.FormValue("q")=="company"{
 }
 }
 func dashboardhandler(w http.ResponseWriter,r *http.Request){
-	d,_:=r.Cookie("D_id")
-	c,_:=r.Cookie("C_id")
-	if (c.Value=="empty")&&(d.Value=="empty"){
-		http.Redirect(w,r,"/",307)
-	}
 	
 	if r.FormValue("q")=="developers"{
-		x,_:=r.Cookie("D_id")
+		x:=r.FormValue("email")
 		db:=dbconnection.Connect()
 		defer db.Close()
-		result,err:=db.Query("select username from developer where emailid=?",x.Value)
+		result,err:=db.Query("select username from developer where emailid=?",x)
 		if err!=nil{
 			log.Fatal(err)
 		}
@@ -239,10 +234,10 @@ func dashboardhandler(w http.ResponseWriter,r *http.Request){
 				
 	}
 	if r.FormValue("q")=="company"{
-		x,_:=r.Cookie("C_id")
+		y:=r.FormValue("email")
 		db:=dbconnection.Connect()
 		defer db.Close()
-		result1,err1:=db.Query("select cname from company where emailid=?",x.Value)
+		result1,err1:=db.Query("select cname from company where emailid=?",y)
 		if err1!=nil{
 			log.Fatal(err1)
 		}
@@ -262,11 +257,9 @@ func dashboardhandler(w http.ResponseWriter,r *http.Request){
 }
 func logouthandler(w http.ResponseWriter,r *http.Request){
 	if r.FormValue("q")=="developers"{
-		cookies.SetCookie(w,"D_id","empty")
 		http.Redirect(w,r,"/",307)
 	}
 	if r.FormValue("q")=="company"{
-		cookies.SetCookie(w,"C_id","empty")
 		http.Redirect(w,r,"/",307)
 	}
 }
