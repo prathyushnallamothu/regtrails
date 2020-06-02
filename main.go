@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"cookies"
+	"github.com/prathyushnallamothu/regtrails/src/cookies"
 	"github.com/gorilla/mux"
 	"github.com/prathyushnallamothu/cleverdbconnection"
 )
