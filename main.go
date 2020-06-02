@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	//"github.com/prathyushnallamothu/mycookie"
+	
 	"github.com/gorilla/mux"
 	"github.com/prathyushnallamothu/cleverdbconnection"
 )
@@ -236,7 +236,7 @@ func dashboardhandler(w http.ResponseWriter,r *http.Request){
 		x:=r.FormValue("email")
 		db:=dbconnection.Connect()
 		defer db.Close()
-		result1,err1:=db.Query("select cname from company where emailid=?",y)
+		result1,err1:=db.Query("select cname from company where emailid=?",x)
 		if err1!=nil{
 			log.Fatal(err1)
 		}
